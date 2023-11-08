@@ -61,7 +61,7 @@
   <!-- Form for entering incident information (initially hidden) -->
 <div class="container mt-4" style="display: none;" id="incidentFormContainer">
     <form id="incidentForm">
-      <h3>New Incident</h3>
+      <h3>'+ New Incident'</h3>
       <div class="mb-3">
         <label for="incidentName" class="form-label">Incident Name:</label>
         <input type="text" id="incidentName" class="form-control" required>
@@ -83,6 +83,40 @@
   <div id="incidentCards" class="row">
       <!-- Incident cards will be dynamically inserted here by the JavaScript -->
   </div>
+  <div class="container container mb-3" style="display: none;" id="emptyContainer">
+    <h3 class="container-header">   </h3>
+    </div>
+  </div>
+
+  <!-- Container for visualizations (initially hidden) -->
+ <div class="container container-incident" style="display: none;" id="visualizationContainer">
+  <h3 class="container-header">Visualizations</h3>
+  <div class="frame">
+    <div class="frame-header frame-header-custom", style="font-weight: bold;">
+      Files:
+  </div>
+  <div class="frame-header frame-header-custom">
+    - Bloodwork Jan 22.pdf
+</div>
+<div class="frame-header frame-header-custom">
+  - Bloodwork May 22.pdf
+</div>
+<div class="frame-header frame-header-custom">
+  - Bloodwork Apr 23.pdf
+</div>
+  <div class="frame-body frame-body-custom">
+      <input type="file" id="fileInput-${incidentFolder}" style="display: none;">
+      <button onclick="document.getElementById('fileInput-${incidentFolder}').click()" class="btn-upload">Upload File</button>
+  </div>
+</div>
+<div class="frame-body frame-body-images"></div>
+  <img id="centeredImage" src="graph1.png" alt="Centered Image">
+  <img id="centeredImage" src="graph2.png" alt="Centered Image">
+  <img id="centeredImage" src="graph3.png" alt="Centered Image">
+  </div>
+</div>
+</div>
+  
   
 </body> 
 
@@ -113,19 +147,19 @@
     padding-right: 80px;
   }
   .card-header-custom {
-      font-weight: bold;
       font-size: 1.2rem;
       padding-left: 20px;
       padding-top: 10px;
       border: none; 
-      background-color: #fef8ff;
+      background-color: #4b2053;
       font-stretch: expanded;
+      color: white;
 
   }
   .card-incident{
-    /*box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);*/
-    background-color: #fef8ff;
-    border: 1px solid #D15EEE; /* Border color */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color: #fbeffd;
+    border: 0.5px solid #c6c6c6; /* Border color */
     border-radius: 10;
     height:300px
     
@@ -135,14 +169,23 @@
   padding-top: 5px;*/
   padding-bottom: 5px;
 }
+.frame-body-images {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
 .frame-header-custom {
   padding-left: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 3px;
+  padding-bottom: 3px;
   font-weight: 550;
 }
 .frame-body-custom2 {
   padding-left: 20px;
+  padding-top: 20px;
   font-size: 0.8rem;
   line-height: 0.1;
  /* padding-top: 5px;
@@ -152,25 +195,27 @@
   padding-left: 20px;
   font-size: 0.9rem;
   line-height: 0.1;
- /* padding-top: 5px;
-  padding-bottom: 5px;*/
+  padding-top: 5px;
 }
 .container-incident{
-  background-color: #fef8ff;
+  background-color: #fbeffd;
   margin-top: 1.5rem;
   margin-left: 7rem;
   margin-right: 7rem;
+  margin-bottom: 1.5rem;
   padding-top: 0px;
   padding-left: 20px;
   padding-right: 20px;
   border-radius: 20px;
+  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.10);
+
 
 }
 .container-header {
-    color: #878787; /* Text color */
+    color: #676666; /* Text color */
     font-size: 1.5rem; /* Font size */
     font-weight: 500; /* Font weight */
-    padding-bottom: 15px;
+    padding-bottom: 7px;
     padding-top: 20px;
 }
 /* Primary Outlined Button */
@@ -182,6 +227,7 @@
     border-radius: 5px; /* Rounded corners */
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-left: 20px;
 }
 
 /* Hover state */
@@ -191,7 +237,7 @@
     border: 1px solid #7d1db9; /* Border color on hover */
 }
 .container-general-info{
-  background-color: #fef8ff;
+  background-color: #fbeffd;
   margin-top: 1.5rem;
   margin-left: 7rem;
   margin-right: 7rem;
@@ -199,7 +245,9 @@
   padding-left: 20px;
   padding-right: 20px;
   border-radius: 20px;
-  width: 500px
+  width: 500px;
+  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.10);
+
 
 }
 /* Customize the table styles */
@@ -210,18 +258,18 @@
 
 /* To style alternate rows with a different background color (optional) */
 .table-custom td{
-  background-color: #fef8ff;
+  background-color: #fbeffd;
   font-weight: bold;
   border: none; /* Removes the border from table cells and headers */
   padding: 8px; /* Adds some padding inside the cells for better readability */
-  background-color: #fef8ff; 
+  background-color: #fbeffd; 
 }
 .table-custom th{
-  background-color: #fef8ff;
+  background-color: #fbeffd;
   font-weight: normal;
   border: none; /* Removes the border from table cells and headers */
   padding: 8px; /* Adds some padding inside the cells for better readability */
-  background-color: #fef8ff; 
+  background-color: #fbeffd; 
 }
 
 .btn-upload {
@@ -240,6 +288,21 @@
     color: #7d1db9; /* Text color on hover */
     background-color: transparent; /* Background color on hover */
     border: 1px solid #7d1db9; /* Border color on hover */
+}
+
+#visualizationContainer {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+}
+
+#centeredImage {
+  max-width: 80%;
+  max-height: 80%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 300px; 
 }
 
 
@@ -323,6 +386,9 @@
             document.getElementById('incidentListContainer').style.display = 'none';
             // Hide the general information display when no patient is selected
             document.getElementById('generalInfoDisplay').style.display = 'none';
+            // Hide the visualization display when no patient is selected
+            document.getElementById('visualizationContainer').style.display = 'none';
+            document.getElementById('emptyContainer').style.display = 'none';
         }
     });
 
@@ -368,11 +434,10 @@
         incidentCard.innerHTML = `
               <div class="card card-incident">
                   <div class="card-header card-header-custom">
-                      ${incidentFolder}
+                      ${incidentFolder} | ${incidentDate}
                   </div>
                   <div class="frame">
                             <div class="frame-body frame-body-custom2">
-                                <p>${incidentDate}</p>
                                 <p>${incidentDescription}</p>
                             </div>
                         </div>
@@ -460,6 +525,8 @@
 
         // Show the incident list container
        }); document.getElementById('incidentListContainer').style.display = 'block';
+       document.getElementById('visualizationContainer').style.display = 'block';
+       document.getElementById('emptyContainer').style.display = 'block';
     });
     }
 
