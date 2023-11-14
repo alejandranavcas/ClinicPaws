@@ -60,4 +60,4 @@ for col in list(result.columns):
 # Resultant preprocessed dataframe
 patient_data_pp = result
     
-print("Data of patient preprocessed and ready for ML model")
+#print("Data of patient preprocessed and ready for ML model")
