@@ -81,5 +81,3 @@ model = pkl.load(open('ml_model/model.pickle', 'rb'))
 # Use the loaded model to make predictions 
 prediction = np.asarray(model.predict(new_pacient))[0]
 print('Prediction: ', prediction)
-
-result_from_python = 'Prediction: ' + prediction
