@@ -61,7 +61,7 @@
   <!-- Form for entering incident information (initially hidden) -->
 <div class="container mt-4" style="display: none;" id="incidentFormContainer">
     <form id="incidentForm">
-      <h3>'+ New Incident'</h3>
+      <h3>'New Incident'</h3>
       <div class="mb-3">
         <label for="incidentName" class="form-label">Incident Name:</label>
         <input type="text" id="incidentName" class="form-control" required>
@@ -154,7 +154,7 @@
 .frame-body-custom {
   /*padding-left: 15px;
   padding-top: 5px;*/
-  padding-bottom: 5px;
+  padding-bottom: 0px;
 }
 .frame-body-images {
   display: flex;
@@ -197,7 +197,7 @@ background: var(--fill-color-light-tertiary, rgba(118, 118, 128, 0.12));
   padding-left: 20px;
   padding-top: 3px;
   padding-bottom: 3px;
-  font-weight: 550;
+  font-weight: bold;
 }
 .frame-body-custom2 {
   padding-left: 20px;
@@ -211,7 +211,7 @@ background: var(--fill-color-light-tertiary, rgba(118, 118, 128, 0.12));
   padding-left: 20px;
   font-size: 0.9rem;
   line-height: 0.1;
-  padding-top: 5px;
+  padding-top: 8px;
 }
 .container-incident{
   background-color: #fbeffd;
@@ -297,7 +297,9 @@ background: var(--fill-color-light-tertiary, rgba(118, 118, 128, 0.12));
     border-radius: 5px; /* Rounded corners */
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-left: 20px
+    margin-left: 20px;
+    font-size: small;
+    margin-bottom: 7px;
 
 }
 
@@ -479,7 +481,7 @@ background: var(--fill-color-light-tertiary, rgba(118, 118, 128, 0.12));
         incidentCard.innerHTML = `
               <div class="card card-incident">
                   <div class="card-header card-header-custom">
-                      ${incidentFolder} | ${incidentDate}
+                      ${incidentFolder} | ${incidentDate} 
                   </div>
                   <div class="frame">
                             <div class="frame-body frame-body-custom2">
@@ -489,7 +491,7 @@ background: var(--fill-color-light-tertiary, rgba(118, 118, 128, 0.12));
                   <div class="frame-body frame-body-custom">
                       <div class="frame">
                           <div class="frame-header frame-header-custom">
-                              Files and Reports
+                            <i class="fas fa-file-pdf fa-0.2x"></i> Files and Reports 
                           </div>
                           <div class="frame-body frame-body-custom">
                               <ul id="filesList-${incidentFolder}">
@@ -501,7 +503,7 @@ background: var(--fill-color-light-tertiary, rgba(118, 118, 128, 0.12));
                       </div>
                       <div class="frame">
                           <div class="frame-header frame-header-custom">
-                              Treatment and Medication
+                            <i class="fas fa-eyedropper fa-0.2x"></i>  Treatment and Medication
                           </div>
                           <div class="frame-body frame-body-treatment">
                             <p>${incidentTreatment}</p>
