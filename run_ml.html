@@ -18,7 +18,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="add_patient.html">
-            <i class="fas fa-user-plus fa-2x"></i> <!-- Font Awesome user-plus icon -->
+            <i class="fas fa-plus-square fa-2x"></i> <!-- Font Awesome user-plus icon -->
           </a>
         </li>
         <li class="nav-item">
@@ -63,6 +63,14 @@
                     <input type="checkbox" id="lethargy" name="clinicalSigns">
                     <label for="lethargy">Lethargy</label>
                 </div>
+                <div>
+                  <input type="checkbox" id="weight loss" name="clinicalSigns">
+                  <label for="weight loss">Weight Loss</label>
+              </div>
+              <div>
+                <input type="checkbox" id="fever" name="clinicalSigns">
+                <label for="fever">Fever</label>
+            </div>
             </div>
 
             <!-- Respiratory Signs -->
@@ -76,6 +84,18 @@
                     <input type="checkbox" id="dyspnea" name="respiratorySigns">
                     <label for="dyspnea">Dyspnea</label>
                 </div>
+                <div>
+                  <input type="checkbox" id="cough" name="respiratorySigns">
+                  <label for="cough">Cough</label>
+              </div>
+              <div>
+                <input type="checkbox" id="cyanosis" name="respiratorySigns">
+                <label for="cyanosis">Cyanosis</label>
+            </div>
+            <div>
+              <input type="checkbox" id="respiratory distress" name="respiratorySigns">
+              <label for="respiratory distress">Respiratory Distress</label>
+          </div>
             </div>
 
             <!-- Intestinal Signs -->
@@ -89,6 +109,10 @@
                     <input type="checkbox" id="tenesmus" name="intestinalSigns">
                     <label for="tenesmus">Tenesmus</label>
                 </div>
+                <div>
+                  <input type="checkbox" id="intestinal blood loss" name="intestinalSigns">
+                  <label for="intestinal blood loss">Intestinal Blood Loss</label>
+              </div>
             </div>
           </form> 
 
@@ -113,6 +137,7 @@
         
         // Your JavaScript code here
         const respuestaButton = document.getElementById('respuestaButton');
+        let prediction = ''; // Declare and initialize the prediction variable
     
         respuestaButton.addEventListener('click', () => {
 

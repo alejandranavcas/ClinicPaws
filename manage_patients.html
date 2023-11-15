@@ -19,7 +19,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="add_patient.html">
-            <i class="fas fa-user-plus fa-2x"></i> <!-- Font Awesome user-plus icon -->
+            <i class="fas fa-plus-square fa-2x"></i> <!-- Font Awesome user-plus icon -->
           </a>
         </li>
         <li class="nav-item">
@@ -410,6 +410,33 @@ background: var(--fill-color-light-tertiary, rgba(118, 118, 128, 0.12));
         }
     });
 
+    patientDropdown.addEventListener('keydown', (event) => {
+      if(event.key==='Enter'){
+        const selectedPatient = patientDropdown.value;
+        if (selectedPatient) {
+            // Display patient information for the selected patient
+            displayPatientInfo(selectedPatient);
+            // Show the "New Incident" button
+            document.getElementById('newIncidentButton').style.display = 'block';
+
+            // Modify the URL of the "New Incident" button to include the selected patient
+            const newIncidentButton = document.getElementById('newIncidentButton');
+            newIncidentButton.href = `new_incident.html?patient=${encodeURIComponent(selectedPatient)}`;
+
+            // Dynamically load and display incidents for the selected patient
+            loadIncidents(selectedPatient);
+        } else {
+            // Hide the "New Incident" button if no patient is selected
+            document.getElementById('newIncidentButton').style.display = 'none';
+            // Hide the incident list container
+            document.getElementById('incidentListContainer').style.display = 'none';
+            // Hide the general information display when no patient is selected
+            document.getElementById('generalInfoDisplay').style.display = 'none';
+            // Hide the visualization display when no patient is selected
+            document.getElementById('visualizationContainer').style.display = 'none';
+            document.getElementById('emptyContainer').style.display = 'none';
+        }}
+    });
     // Function to load and display incidents for the selected patient
     function loadIncidents(selectedPatient) {
     // Assuming you have a directory structure for patient incidents
