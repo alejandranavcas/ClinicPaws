@@ -4,29 +4,98 @@ Created on Sun Oct 08 12:49:25 2023
 
 @author: Alejandra
 """
+# Requirement ###############################################################################################################
+#pip install numpy
+#pip install pandas=1.5.3
+#pip install xlrd (maybe not needed)
+#pip install openpyxl
+#pip install scikit-learn=1.2.1
+
+##############################################################################################################################
 
 import warnings
 # Temporarily suppress all warnings
 warnings.filterwarnings("ignore")
 
-import numpy as np
 import pandas as pd
+import numpy as np
 import pickle as pkl
 
+# Get info from run_ml.html ##################################################################################################
+import sys
+
+try: 
+    # Access the command-line arguments
+    patient_dir = sys.argv[1]  # The first argument is the path to the patient directory
+
+    # Now you can use the patient_dir variable in your Python script
+    #print("Processing data for patient in directory:" + patient_dir)
+except:
+    print("Error. Patient data not loaded ")
+
+
+
+# Read info about pacient #####################################################################################################
+#name_patient = 'Tom'
+#phone_number = '123456'
+#pacient_ml_data = pd.read_excel('patient_data/'+name_patient+'_'+phone_number+'/patient_ml_data.xlsx', engine='openpyxl')
+#patient_info = pd.read_excel('patient_data/'+name_patient+'_'+phone_number+'/patient_info.xlsx', engine='openpyxl')
+
+pacient_ml_data = pd.read_excel('patient_data/'+ patient_dir +'/patient_ml_data.xlsx', engine='openpyxl')
+patient_info = pd.read_excel('patient_data/'+ patient_dir +'/patient_info.xlsx', engine='openpyxl')
+breed = patient_info.loc[0,'Breed']
+age = 2023 - patient_info.loc[0, 'Year of Birth']
+
+
+# Create dataset to process ##################################################################################################
+data = pd.concat([pacient_ml_data, patient_info['Breed']], axis=1)
+data['Age'] = [age]
+
+##############################################################################################################################
+# Preprocessing
+
+# Where the nan are
+nan_columns = data.columns[data.isna().any()].tolist()
+no_nan_columns = list(set(data.columns) - set(nan_columns) - set(['Age']))
+
+for c in no_nan_columns:
+    # Split the comma-separated categories and use get_dummies
+    split_categories = data[c].str.split(', ')
+    dummies = pd.get_dummies(split_categories.apply(pd.Series).stack()).sum(level=0)
+    
+    # add the new dummy variables and delete the categorical 
+    result = pd.concat([data, dummies], axis=1)
+    result = result.drop(columns=c)
+
+    
+if 'Breed' in nan_columns:
+    print('Please, enter the breed of the dog')
+else:
+    # Do one-hot encoding of breed
+    result = pd.get_dummies(result, columns=['Breed'])
+
+if 'Ultrasound' in no_nan_columns:
+    # Do one-hot encoding of Ultrasound (((and skin lesion)))
+    result = pd.get_dummies(result, columns=['Ultrasound'])
+    
+
+# Replace NaN values with 0
+for col in list(result.columns):
+    result[col].fillna(0, inplace=True)
+
+# Resultant preprocessed dataframe
+patient_data_pp = result
+    
+#################################################################################################################
+
+
+
 #%%
-from preprocessing_data import *
-
-# Upload dataset
-data = pd.read_excel('Fungus_diseases_dataset.xlsx', sheet_name='All diseases')
-
-# Select a dog
-dog_id = 2
-dog_data = data.iloc[dog_id-1:dog_id]
-dog_data_pp = preprocess_data(dog_data)
-print(dog_data)
+# Upload patient data ###############################################################################################
+#from preprocessing_data_patient import * # what we are using is patient_data_pp
 
 #%%
-# Process by hand
+# Process by hand ####################################################################################################
 
 # Define the columns you want in your DataFrame
 columns = ['Age (Years)', 'Anorexia', 'Depression', 'Fever', 'Lethargy',
@@ -63,26 +132,28 @@ df = df.append(pd.Series(nan_values, index=columns), ignore_index=True)
 
 for c in columns:
     try:
-        df[c] = int(dog_data_pp[c])
+        df[c] = int(patient_data_pp[c])
         #print(c, 'is a feature in the dog.')
     except:
         df[c] = 0
         #print(c, 'is not there.')
 
 
-
 #%%
-# Make a prediction
-#new_pacient = [2., 1., 1., 1., 1., 1., 0., 1., 1., 0., 0., 1., 0., 0., 0., 0., 1.,
-       #0., 1., 1., 0., 0., 0., 0., 1., 1., 1., 1., 0., 0., 0., 0., 0., 0.,
-       #0., 0., 1., 0., 0., 1., 0., 1., 0., 1., 0., 0., 1., 0., 0., 0., 0.,
-       #0., 1., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.]
+# Make a prediction #####################################################################################################
+
 new_pacient = df.to_numpy()
 new_pacient = np.reshape(new_pacient, (1, -1))
 
-# Open the saved file with read-binary mode
-model = pkl.load(open('model.pickle', 'rb'))
+# Open the saved file with read-binary mode containing the model
+model = pkl.load(open('ml_model/model.pickle', 'rb'))
 
 # Use the loaded model to make predictions 
 prediction = np.asarray(model.predict(new_pacient))[0]
-print('Prediction: ', prediction)
+
+# If prediction is "Healthy"
+if prediction == "Healthy":
+    prediction = "Not a fungal disease"
+
+# Print message
+print('Prediction for '+ patient_dir +': ', prediction)
