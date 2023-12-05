@@ -11,22 +11,22 @@ A video demo is provided in the repository with the name **demo_video.mp4**.
 ### How to run this application:
 
 You need the following requirements to run on your machine:
-> npm install -g electron
-> npm install exceljs
-> npm install chart.js
-> npm install --global yarn
-> yarn add pdf-parse
-> npm install multer
+`> npm install -g electron`
+`> npm install exceljs`
+`> npm install chart.js`
+`> npm install --global yarn`
+`> yarn add pdf-parse`
+`> npm install multer`
 
 Also, you need the following python packages:
-> pip install numpy
-> pip install pandas=1.5.3
-> pip install xlrd
-> pip install openpyxl
-> pip install scikit-learn=1.2.1
+`> pip install numpy`
+`> pip install pandas=1.5.3`
+`> pip install xlrd`
+`> pip install openpyxl`
+`> pip install scikit-learn=1.2.1`
 
 Then, to start the application, run in your terminal: 
-> npm start
+`> npm start`
 
 
 ### About the Machine learning part:
