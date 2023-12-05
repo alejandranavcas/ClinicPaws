@@ -10,7 +10,7 @@ A video demo is provided in the repository with the name **demo_video.mp4**.
 
 ### How to run this application:
 
-You need the following requirements to run on your machine:
+You need the following requirements to run on your machine:  
 `npm install -g electron`  
 `npm install exceljs`  
 `npm install chart.js`  
@@ -18,19 +18,19 @@ You need the following requirements to run on your machine:
 `yarn add pdf-parse`  
 `npm install multer`  
 
-Also, you need the following python packages:
+Also, you need the following python packages:  
 `pip install numpy`  
 `pip install pandas=1.5.3`  
 `pip install xlrd`  
 `pip install openpyxl`  
 `pip install scikit-learn=1.2.1`  
 
-Then, to start the application, run in your terminal: 
+Then, to start the application, run in your terminal:  
 `npm start`
 
 
 ### About the Machine learning part:
 
-The machine learning model is saved in ml_model/model.pickle and the predictions are run in ml_model/predict_model.py
+The machine learning model is saved in ml_model/model.pickle and the new predictions are run in ml_model/predict_model.py
 
-The code for the previous analysis of the used dataset, the iterative training and testing on different models are in the folder ml_model/training_model.
+The code for the analysis and preprocessing of the used dataset *Fungus_diseases_dataset.xlsx*, the iterative training and testing on different models and the training of the final selected model scripts are in the folder ml_model/train_model.
